@@ -49,11 +49,15 @@ type SnapshotRecorder interface {
 // NoopRecorder is a noop stats recorder. It can be useful if recording statistics is not necessary.
 type NoopRecorder struct{}
 
-func (np *NoopRecorder) RecordHits(count int)                     {}
-func (np *NoopRecorder) RecordMisses(count int)                   {}
-func (np *NoopRecorder) RecordEviction(weight uint32)             {}
-func (np *NoopRecorder) RecordLoadFailure(loadTime time.Duration) {}
-func (np *NoopRecorder) RecordLoadSuccess(loadTime time.Duration) {}
-func (np *NoopRecorder) Snapshot() Stats {
-	return Stats{}
+func (np *NoopRecorder) RecordHits(count int)         { _ = "STUB: not implemented"; return }
+func (np *NoopRecorder) RecordMisses(count int)       { _ = "STUB: not implemented"; return }
+func (np *NoopRecorder) RecordEviction(weight uint32) { _ = "STUB: not implemented"; return }
+func (np *NoopRecorder) RecordLoadFailure(loadTime time.Duration) {
+	_ = "STUB: not implemented"
+	return
 }
+func (np *NoopRecorder) RecordLoadSuccess(loadTime time.Duration) {
+	_ = "STUB: not implemented"
+	return
+}
+func (np *NoopRecorder) Snapshot() Stats { _ = "STUB: not implemented"; return *new(Stats) }

@@ -38,18 +38,11 @@ var deletionCauseStrings = []string{
 }
 
 // String implements [fmt.Stringer] interface.
-func (dc DeletionCause) String() string {
-	if dc >= 1 && int(dc) <= len(deletionCauseStrings) {
-		return deletionCauseStrings[dc-1]
-	}
-	return "<unknown otter.DeletionCause>"
-}
+func (dc DeletionCause) String() string { _ = "STUB: not implemented"; return "" }
 
 // IsEviction returns true if there was an automatic deletion due to eviction
 // (the cause is neither [CauseInvalidation] nor [CauseReplacement]).
-func (dc DeletionCause) IsEviction() bool {
-	return !(dc == CauseInvalidation || dc == CauseReplacement)
-}
+func (dc DeletionCause) IsEviction() bool { _ = "STUB: not implemented"; return false }
 
 // DeletionEvent is an event of the deletion of a single entry.
 type DeletionEvent[K comparable, V any] struct {
@@ -63,6 +56,4 @@ type DeletionEvent[K comparable, V any] struct {
 
 // WasEvicted returns true if there was an automatic deletion due to eviction (the cause is neither
 // [CauseInvalidation] nor [CauseReplacement]).
-func (de DeletionEvent[K, V]) WasEvicted() bool {
-	return de.Cause.IsEviction()
-}
+func (de DeletionEvent[K, V]) WasEvicted() bool { _ = "STUB: not implemented"; return false }

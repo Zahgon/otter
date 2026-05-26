@@ -17,17 +17,7 @@ package xiter
 import "iter"
 
 // Concat returns an iterator over the concatenation of the sequences.
-func Concat[V any](seqs ...iter.Seq[V]) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		for _, seq := range seqs {
-			for e := range seq {
-				if !yield(e) {
-					return
-				}
-			}
-		}
-	}
-}
+func Concat[V any](seqs ...iter.Seq[V]) iter.Seq[V] { _ = "STUB: not implemented"; return nil }
 
 // MergeFunc merges two sequences of values ordered by the function f.
 // Values appear in the output once for each time they appear in x
@@ -38,26 +28,6 @@ func Concat[V any](seqs ...iter.Seq[V]) iter.Seq[V] {
 // the output sequence will not be ordered by f,
 // but it will still contain every value from x and y exactly once.
 func MergeFunc[V any](x, y iter.Seq[V], f func(V, V) int) iter.Seq[V] {
-	return func(yield func(V) bool) {
-		next, stop := iter.Pull(y)
-		defer stop()
-		v2, ok2 := next()
-		for v1 := range x {
-			for ok2 && f(v1, v2) > 0 {
-				if !yield(v2) {
-					return
-				}
-				v2, ok2 = next()
-			}
-			if !yield(v1) {
-				return
-			}
-		}
-		for ok2 {
-			if !yield(v2) {
-				return
-			}
-			v2, ok2 = next()
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

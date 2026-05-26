@@ -2,15 +2,11 @@ package main
 
 import (
 	"context"
-	"database/sql"
-	"errors"
-	"fmt"
 	"time"
 
 	"github.com/jmoiron/sqlx"
 
 	"github.com/maypok86/otter/v2"
-	"github.com/maypok86/otter/v2/stats"
 )
 
 // User represents a user entity in the system
@@ -27,21 +23,19 @@ type Repo struct {
 }
 
 // NewRepo creates a new repository instance
-func NewRepo(db *sqlx.DB) *Repo {
-	return &Repo{db: db}
-}
+func NewRepo(db *sqlx.DB) *Repo { _ = "STUB: not implemented"; return nil }
 
 // GetByID retrieves a user by ID from the database
 func (r *Repo) GetByID(ctx context.Context, id int64) (User, error) {
-	const query = "SELECT * FROM users WHERE id = $1" // SQL query with parameter binding
-
-	var user User
-	// Execute query and map result to User struct
-	if err := r.db.GetContext(ctx, &user, query, id); err != nil {
-		return User{}, fmt.Errorf("get user from db: %w", err) // Wrap error with context
-	}
-	return user, nil
+	_ = "STUB: not implemented"
+	return *new(User), nil
 }
+
+// SQL query with parameter binding
+
+// Execute query and map result to User struct
+
+// Wrap error with context
 
 // CachedRepo provides cached access to user data
 type CachedRepo struct {
@@ -51,35 +45,25 @@ type CachedRepo struct {
 
 // NewCachedRepo creates a new cached repository with Otter cache
 func NewCachedRepo(repo *Repo) *CachedRepo {
+	_ = "STUB: not implemented"
 	// Loader function that gets called on cache misses
-	loader := func(ctx context.Context, key int64) (User, error) {
-		user, err := repo.GetByID(ctx, key)
-		if err != nil {
-			if errors.Is(err, sql.ErrNoRows) {
-				// Convert "not found" DB error to cache-specific error
-				return User{}, otter.ErrNotFound
-			}
-			return User{}, err
-		}
-		return user, nil
-	}
-
-	// Initialize and configure Otter cache with:
-	cache := otter.Must(&otter.Options[int64, User]{
-		MaximumSize:       10_000,                                              // Maximum cache capacity
-		ExpiryCalculator:  otter.ExpiryWriting[int64, User](time.Hour),         // Entry TTL (time-to-live)
-		RefreshCalculator: otter.RefreshWriting[int64, User](50 * time.Minute), // Refresh interval
-		StatsRecorder:     stats.NewCounter(),                                  // Cache statistics collector
-	})
-
-	return &CachedRepo{
-		cache:  cache,
-		loader: otter.LoaderFunc[int64, User](loader), // Convert loader to Otter-compatible type
-	}
+	return nil
 }
+
+// Convert "not found" DB error to cache-specific error
+
+// Initialize and configure Otter cache with:
+
+// Maximum cache capacity
+// Entry TTL (time-to-live)
+// Refresh interval
+// Cache statistics collector
+
+// Convert loader to Otter-compatible type
 
 // GetByID retrieves a user by ID, using cache when possible
 func (cr *CachedRepo) GetByID(ctx context.Context, id int64) (User, error) {
+	_ = "STUB: not implemented"
 	// Get from cache, calling loader on cache miss
-	return cr.cache.Get(ctx, id, cr.loader)
+	return *new(User), nil
 }

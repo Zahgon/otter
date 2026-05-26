@@ -7,21 +7,12 @@ type Result struct {
 }
 
 func NewResult(name string, capacity int, ratio float64) Result {
-	return Result{
-		name:     name,
-		capacity: capacity,
-		ratio:    ratio,
-	}
+	_ = "STUB: not implemented"
+	return *new(Result)
 }
 
-func (r Result) Name() string {
-	return r.name
-}
+func (r Result) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (r Result) Capacity() int {
-	return r.capacity
-}
+func (r Result) Capacity() int { _ = "STUB: not implemented"; return 0 }
 
-func (r Result) Ratio() float64 {
-	return r.ratio
-}
+func (r Result) Ratio() float64 { _ = "STUB: not implemented"; return 0 }

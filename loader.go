@@ -45,15 +45,21 @@ type LoaderFunc[K comparable, V any] func(ctx context.Context, key K) (V, error)
 
 // Load calls f(ctx, key).
 func (lf LoaderFunc[K, V]) Load(ctx context.Context, key K) (V, error) {
-	return lf(ctx, key)
+	_ = "STUB: not implemented"
+	return *
+
+	// Reload calls f(ctx, key).
+	new(V), nil
 }
 
-// Reload calls f(ctx, key).
 func (lf LoaderFunc[K, V]) Reload(ctx context.Context, key K, oldValue V) (V, error) {
-	return lf(ctx, key)
+	_ = "STUB: not implemented"
+	return *
+
+	// BulkLoader computes or retrieves values, based on the keys, for use in populating a [Cache].
+	new(V), nil
 }
 
-// BulkLoader computes or retrieves values, based on the keys, for use in populating a [Cache].
 type BulkLoader[K comparable, V any] interface {
 	// BulkLoad computes or retrieves the values corresponding to keys.
 	// This method is called by Cache.BulkGet.
@@ -86,16 +92,22 @@ type BulkLoaderFunc[K comparable, V any] func(ctx context.Context, keys []K) (ma
 
 // BulkLoad calls f(ctx, keys).
 func (blf BulkLoaderFunc[K, V]) BulkLoad(ctx context.Context, keys []K) (map[K]V, error) {
-	return blf(ctx, keys)
+	_ = "STUB: not implemented"
+	return nil,
+
+		// BulkReload calls f(ctx, keys).
+		nil
 }
 
-// BulkReload calls f(ctx, keys).
 func (blf BulkLoaderFunc[K, V]) BulkReload(ctx context.Context, keys []K, oldValues []V) (map[K]V, error) {
-	return blf(ctx, keys)
+	_ = "STUB: not implemented"
+	return nil,
+
+		// RefreshResult holds the results of [Cache.Refresh]/[Cache.BulkRefresh], so they can be passed
+		// on a channel.
+		nil
 }
 
-// RefreshResult holds the results of [Cache.Refresh]/[Cache.BulkRefresh], so they can be passed
-// on a channel.
 type RefreshResult[K comparable, V any] struct {
 	// Key is the key corresponding to the refreshed entry.
 	Key K

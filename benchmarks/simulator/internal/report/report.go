@@ -1,9 +1,7 @@
 package report
 
 import (
-	"github.com/maypok86/otter/v2/benchmarks/simulator/internal/report/chart"
 	"github.com/maypok86/otter/v2/benchmarks/simulator/internal/report/simulation"
-	"github.com/maypok86/otter/v2/benchmarks/simulator/internal/report/table"
 )
 
 type reporter interface {
@@ -15,23 +13,8 @@ type Reporter struct {
 }
 
 func NewReporter(name string, t [][]simulation.Result) *Reporter {
-	return &Reporter{
-		reporters: []reporter{
-			table.NewTable(t),
-			chart.NewChart(name, t),
-		},
-	}
-}
-
-func (r *Reporter) Report() error {
-	if r == nil {
-		return nil
-	}
-
-	for _, rep := range r.reporters {
-		if err := rep.Report(); err != nil {
-			return err
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+func (r *Reporter) Report() error { _ = "STUB: not implemented"; return nil }

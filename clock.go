@@ -18,8 +18,6 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
-
-	"github.com/maypok86/otter/v2/internal/xmath"
 )
 
 // Clock is a time source that
@@ -46,52 +44,27 @@ type timeSource interface {
 	ProcessTick()
 }
 
-func newTimeSource(clock Clock) timeSource {
-	if clock == nil {
-		return &realSource{}
-	}
-	if r, ok := clock.(*realSource); ok {
-		return r
-	}
-	if f, ok := clock.(*fakeSource); ok {
-		return f
-	}
-	return newCustomSource(clock)
-}
+func newTimeSource(clock Clock) timeSource { _ = "STUB: not implemented"; return *new(timeSource) }
 
 type customSource struct {
 	clock         Clock
 	isInitialized atomic.Bool
 }
 
-func newCustomSource(clock Clock) *customSource {
-	return &customSource{
-		clock: clock,
-	}
-}
+func newCustomSource(clock Clock) *customSource { _ = "STUB: not implemented"; return nil }
 
-func (cs *customSource) Init() {
-	if !cs.isInitialized.Load() {
-		cs.isInitialized.Store(true)
-	}
-}
+func (cs *customSource) Init() { _ = "STUB: not implemented"; return }
 
-func (cs *customSource) NowNano() int64 {
-	if !cs.isInitialized.Load() {
-		return 0
-	}
-	return cs.clock.NowNano()
-}
+func (cs *customSource) NowNano() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (cs *customSource) Tick(duration time.Duration) <-chan time.Time {
-	return cs.clock.Tick(duration)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (cs *customSource) Sleep(duration time.Duration) {
-	time.Sleep(duration)
-}
+func (cs *customSource) Sleep(duration time.Duration) { _ = "STUB: not implemented"; return }
 
-func (cs *customSource) ProcessTick() {}
+func (cs *customSource) ProcessTick() { _ = "STUB: not implemented"; return }
 
 type realSource struct {
 	initMutex     sync.Mutex
@@ -100,35 +73,18 @@ type realSource struct {
 	startNanos    atomic.Int64
 }
 
-func (c *realSource) Init() {
-	if !c.isInitialized.Load() {
-		c.initMutex.Lock()
-		if !c.isInitialized.Load() {
-			now := time.Now()
-			c.start = now
-			c.startNanos.Store(now.UnixNano())
-			c.isInitialized.Store(true)
-		}
-		c.initMutex.Unlock()
-	}
-}
+func (c *realSource) Init() { _ = "STUB: not implemented"; return }
 
-func (c *realSource) NowNano() int64 {
-	if !c.isInitialized.Load() {
-		return 0
-	}
-	return xmath.SaturatedAdd(c.startNanos.Load(), time.Since(c.start).Nanoseconds())
-}
+func (c *realSource) NowNano() int64 { _ = "STUB: not implemented"; return 0 }
 
 func (c *realSource) Tick(duration time.Duration) <-chan time.Time {
-	return time.Tick(duration)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *realSource) Sleep(duration time.Duration) {
-	time.Sleep(duration)
-}
+func (c *realSource) Sleep(duration time.Duration) { _ = "STUB: not implemented"; return }
 
-func (c *realSource) ProcessTick() {}
+func (c *realSource) ProcessTick() { _ = "STUB: not implemented"; return }
 
 type fakeSource struct {
 	mutex          sync.Mutex
@@ -144,89 +100,14 @@ type fakeSource struct {
 	enableTick     chan time.Duration
 }
 
-func (f *fakeSource) Init() {
-	f.initOnce.Do(func() {
-		f.mutex.Lock()
-		now := time.Now()
-		f.now = now
-		f.sleeps = make(chan time.Duration)
-		f.firstSleep.Store(true)
-		f.enableTick = make(chan time.Duration)
-		f.ticker = make(chan time.Time, 1)
-		f.mutex.Unlock()
+func (f *fakeSource) Init() { _ = "STUB: not implemented"; return }
 
-		go func() {
-			var (
-				dur time.Duration
-				d   time.Duration
-			)
-			enabled := false
-			last := now
-			for {
-				select {
-				case d = <-f.enableTick:
-					enabled = true
-					for d <= dur {
-						if f.firstSleep.Load() {
-							f.tickWg.Add(1)
-							f.ticker <- last
-							f.tickWg.Wait()
-							f.firstSleep.Store(false)
-						}
-						last = last.Add(d)
-						f.tickWg.Add(1)
-						f.ticker <- last
-						dur -= d
-					}
-				case s := <-f.sleeps:
-					if enabled && f.firstSleep.Load() {
-						f.tickWg.Add(1)
-						f.ticker <- last
-						f.tickWg.Wait()
-						f.firstSleep.Store(false)
-					}
-					f.mutex.Lock()
-					f.now = f.now.Add(s)
-					f.mutex.Unlock()
-					dur += s
-					if enabled {
-						for d <= dur {
-							last = last.Add(d)
-							f.tickWg.Add(1)
-							f.ticker <- last
-							dur -= d
-						}
-					}
-					f.sleepWg.Done()
-				}
-			}
-		}()
-	})
-}
+func (f *fakeSource) NowNano() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (f *fakeSource) NowNano() int64 {
-	return f.getNow().UnixNano()
-}
+func (f *fakeSource) Tick(d time.Duration) <-chan time.Time { _ = "STUB: not implemented"; return nil }
 
-func (f *fakeSource) Tick(d time.Duration) <-chan time.Time {
-	f.enableTickOnce.Do(func() {
-		f.enableTick <- d
-	})
-	return f.ticker
-}
+func (f *fakeSource) Sleep(d time.Duration) { _ = "STUB: not implemented"; return }
 
-func (f *fakeSource) Sleep(d time.Duration) {
-	f.sleepWg.Add(1)
-	f.sleeps <- d
-	f.sleepWg.Wait()
-}
+func (f *fakeSource) getNow() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
-func (f *fakeSource) getNow() time.Time {
-	f.mutex.Lock()
-	defer f.mutex.Unlock()
-	return f.now
-}
-
-func (f *fakeSource) ProcessTick() {
-	f.tickWg.Done()
-}
+func (f *fakeSource) ProcessTick() { _ = "STUB: not implemented"; return }

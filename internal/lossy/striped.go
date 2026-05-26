@@ -59,161 +59,53 @@ type Striped[K comparable, V any] struct {
 }
 
 func NewStriped[K comparable, V any](maxLen int, nodeManager *node.Manager[K, V]) *Striped[K, V] {
-	return &Striped[K, V]{
-		nodeManager: nodeManager,
-		maxLen:      maxLen,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Add inserts the specified element into this buffer if it is possible to do so immediately without
 // violating capacity restrictions. The addition is allowed to fail spuriously if multiple
 // goroutines insert concurrently.
 func (s *Striped[K, V]) Add(n node.Node[K, V]) Status {
-	t, ok := tokenPool.Get().(*token)
-	if !ok {
-		t = &token{
-			idx: xruntime.Fastrand(),
-		}
-	}
-	defer tokenPool.Put(t)
-
-	bs := s.striped.Load()
-	if bs == nil {
-		return s.expandOrRetry(n, t, true)
-	}
-
-	//nolint:gosec // len will never overflow uint32
-	buffer := bs.buffers[t.idx&uint32(bs.len-1)].Load()
-	if buffer == nil {
-		return s.expandOrRetry(n, t, true)
-	}
-
-	result := buffer.add(n)
-	if result == Failed {
-		return s.expandOrRetry(n, t, false)
-	}
-
-	return result
+	_ = "STUB: not implemented"
+	return *new(Status)
 }
+
+//nolint:gosec // len will never overflow uint32
 
 func (s *Striped[K, V]) expandOrRetry(n node.Node[K, V], t *token, wasUncontended bool) Status {
-	result := Failed
+	_ = "STUB: not implemented"
+
 	// True if last slot nonempty.
-	collide := true
-
-	for attempt := 0; attempt < attempts; attempt++ {
-		bs := s.striped.Load()
-		if bs != nil && bs.len > 0 {
-			//nolint:gosec // len will never overflow uint32
-			buffer := bs.buffers[t.idx&uint32(bs.len-1)].Load()
-			//nolint:gocritic // the switch statement looks even worse here
-			if buffer == nil {
-				if s.busy.Load() == 0 && s.busy.CompareAndSwap(0, 1) {
-					// Try to attach new buffer.
-					created := false
-					rs := s.striped.Load()
-					if rs != nil && rs.len > 0 {
-						// Recheck under lock.
-						//nolint:gosec // len will never overflow uint32
-						j := t.idx & uint32(rs.len-1)
-						if rs.buffers[j].Load() == nil {
-							rs.buffers[j].Store(newRing(s.nodeManager, n))
-							created = true
-						}
-					}
-					s.busy.Store(0)
-					if created {
-						result = Success
-						break
-					}
-					// Slot is now non-empty.
-					continue
-				}
-				collide = false
-			} else if !wasUncontended {
-				// CAS already known to fail.
-				// Continue after rehash.
-				wasUncontended = true
-			} else {
-				result = buffer.add(n)
-				//nolint:gocritic // the switch statement looks even worse here
-				if result != Failed {
-					break
-				} else if bs.len >= s.maxLen || s.striped.Load() != bs {
-					// At max size or stale.
-					collide = false
-				} else if !collide {
-					collide = true
-				} else if s.busy.Load() == 0 && s.busy.CompareAndSwap(0, 1) {
-					if s.striped.Load() == bs {
-						length := bs.len << 1
-						striped := &striped[K, V]{
-							buffers: make([]atomic.Pointer[ring[K, V]], length),
-							len:     length,
-						}
-						for j := 0; j < bs.len; j++ {
-							striped.buffers[j].Store(bs.buffers[j].Load())
-						}
-						s.striped.Store(striped)
-					}
-					s.busy.Store(0)
-					collide = false
-					continue
-				}
-			}
-			t.idx = xruntime.Fastrand()
-		} else if s.busy.Load() == 0 && s.striped.Load() == bs && s.busy.CompareAndSwap(0, 1) {
-			init := false
-			if s.striped.Load() == bs {
-				striped := &striped[K, V]{
-					buffers: make([]atomic.Pointer[ring[K, V]], 1),
-					len:     1,
-				}
-				striped.buffers[0].Store(newRing(s.nodeManager, n))
-				s.striped.Store(striped)
-				init = true
-			}
-			s.busy.Store(0)
-			if init {
-				result = Success
-				break
-			}
-		}
-	}
-
-	return result
+	return *new(Status)
 }
+
+//nolint:gosec // len will never overflow uint32
+
+//nolint:gocritic // the switch statement looks even worse here
+
+// Try to attach new buffer.
+
+// Recheck under lock.
+//nolint:gosec // len will never overflow uint32
+
+// Slot is now non-empty.
+
+// CAS already known to fail.
+// Continue after rehash.
+
+//nolint:gocritic // the switch statement looks even worse here
+
+// At max size or stale.
 
 // DrainTo drains the buffer, sending each element to the consumer for processing. The caller must ensure
 // that a consumer has exclusive read access to the buffer.
 func (s *Striped[K, V]) DrainTo(consumer func(n node.Node[K, V])) {
-	bs := s.striped.Load()
-	if bs == nil {
-		return
-	}
-	for i := 0; i < bs.len; i++ {
-		b := bs.buffers[i].Load()
-		if b != nil {
-			b.drainTo(consumer)
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func (s *Striped[K, V]) Len() int {
-	result := 0
-	bs := s.striped.Load()
-	if bs == nil {
-		return result
-	}
-	for i := 0; i < bs.len; i++ {
-		b := bs.buffers[i].Load()
-		if b == nil {
-			continue
-		}
-		result += b.len()
-	}
-	return result
-}
+func (s *Striped[K, V]) Len() int { _ = "STUB: not implemented"; return 0 }
 
 /*
 func (s *Striped[K, V]) Clear() {

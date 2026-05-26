@@ -43,21 +43,16 @@ type Logger struct {
 }
 
 // New returns a new Logger.
-func New(log *slog.Logger, opts ...Option) *Logger {
-	if log == nil {
-		panic("pslog: log is nil")
-	}
-	return &Logger{
-		log: log,
-	}
-}
+func New(log *slog.Logger, opts ...Option) *Logger { _ = "STUB: not implemented"; return nil }
 
 // Warn is for the otter.Logger interface.
 func (l *Logger) Warn(ctx context.Context, msg string, err error) {
-	l.log.WarnContext(ctx, msg, slog.Any("err", err))
+	_ = "STUB: not implemented"
+	return
 }
 
 // Error is for the otter.Logger interface.
 func (l *Logger) Error(ctx context.Context, msg string, err error) {
-	l.log.ErrorContext(ctx, msg, slog.Any("err", err))
+	_ = "STUB: not implemented"
+	return
 }

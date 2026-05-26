@@ -13,7 +13,6 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/maypok86/otter/v2/internal/xmath"
 	"github.com/maypok86/otter/v2/internal/xruntime"
 )
 
@@ -50,42 +49,14 @@ type astripe struct {
 }
 
 // NewAdder creates a new Adder instance.
-func NewAdder() *Adder {
-	nstripes := xmath.RoundUpPowerOf2(xruntime.Parallelism())
-	return &Adder{
-		stripes: make([]astripe, nstripes),
-		mask:    nstripes - 1,
-	}
-}
+func NewAdder() *Adder { _ = "STUB: not implemented"; return nil }
 
 // Add adds the delta to the Adder.
-func (a *Adder) Add(delta uint64) {
-	t, ok := tokenPool.Get().(*token)
-	if !ok {
-		t = &token{
-			idx: xruntime.Fastrand(),
-		}
-	}
-	for {
-		stripe := &a.stripes[t.idx&a.mask]
-		cnt := stripe.adder.Load()
-		if stripe.adder.CompareAndSwap(cnt, cnt+delta) {
-			break
-		}
-		// Give a try with another randomly selected stripe.
-		t.idx = xruntime.Fastrand()
-	}
-	tokenPool.Put(t)
-}
+func (a *Adder) Add(delta uint64) { _ = "STUB: not implemented"; return }
+
+// Give a try with another randomly selected stripe.
 
 // Value returns the current Adder value.
 // The returned value may not include all of the latest operations in
 // presence of concurrent modifications of the Adder.
-func (a *Adder) Value() uint64 {
-	value := uint64(0)
-	for i := 0; i < len(a.stripes); i++ {
-		stripe := &a.stripes[i]
-		value += stripe.adder.Load()
-	}
-	return value
-}
+func (a *Adder) Value() uint64 { _ = "STUB: not implemented"; return 0 }

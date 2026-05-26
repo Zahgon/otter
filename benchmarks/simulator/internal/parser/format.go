@@ -9,11 +9,4 @@ const (
 	CordaFormat          = "corda"
 )
 
-func IsAvailableFormat(format string) bool {
-	switch format {
-	case ArcFormat, LirsFormat, OracleGeneralFormat, LibcachesimCSVFormat, ScarabFormat, CordaFormat:
-		return true
-	default:
-		return false
-	}
-}
+func IsAvailableFormat(format string) bool { _ = "STUB: not implemented"; return false }

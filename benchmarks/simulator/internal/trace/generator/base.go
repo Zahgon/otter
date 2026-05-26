@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"runtime"
 	"sync"
 
 	"github.com/maypok86/otter/v2/benchmarks/simulator/internal/event"
@@ -16,26 +15,6 @@ type base struct {
 	limit    *uint
 }
 
-func newBase(generate genFunc, limit *uint) base {
-	return base{
-		stream:   newStream[event.AccessEvent](16 * runtime.GOMAXPROCS(0)),
-		generate: generate,
-		limit:    limit,
-	}
-}
+func newBase(generate genFunc, limit *uint) base { _ = "STUB: not implemented"; return *new(base) }
 
-func (b *base) Generate() Stream[event.AccessEvent] {
-	b.once.Do(func() {
-		go func() {
-			sender := newSender(b.stream, b.limit)
-			for {
-				if stop := b.generate(sender); stop {
-					b.stream.close()
-					break
-				}
-			}
-		}()
-	})
-
-	return b.stream
-}
+func (b *base) Generate() Stream[event.AccessEvent] { _ = "STUB: not implemented"; return nil }

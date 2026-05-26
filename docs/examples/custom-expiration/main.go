@@ -11,17 +11,22 @@ type expiryCalculator struct{}
 
 // ExpireAfterCreate sets expiration time for new entries (500ms)
 func (ec *expiryCalculator) ExpireAfterCreate(_ otter.Entry[int, int]) time.Duration {
-	return 500 * time.Millisecond
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // ExpireAfterUpdate sets expiration time after updates (300ms)
 func (ec *expiryCalculator) ExpireAfterUpdate(_ otter.Entry[int, int], _ int) time.Duration {
-	return 300 * time.Millisecond
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // ExpireAfterRead returns remaining expiration time for reads
 func (ec *expiryCalculator) ExpireAfterRead(entry otter.Entry[int, int]) time.Duration {
-	return entry.ExpiresAfter() // Preserves current expiration
+	_ = "STUB: not implemented"
+	return *
+	// Preserves current expiration
+	new(time.Duration)
 }
 
 func main() {

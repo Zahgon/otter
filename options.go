@@ -15,8 +15,6 @@
 package otter
 
 import (
-	"errors"
-
 	"github.com/maypok86/otter/v2/stats"
 )
 
@@ -154,71 +152,19 @@ type Options[K comparable, V any] struct {
 	Logger Logger
 }
 
-func (o *Options[K, V]) getMaximum() uint64 {
-	if o.MaximumSize > 0 {
-		return uint64(o.MaximumSize)
-	}
-	if o.MaximumWeight > 0 {
-		return o.MaximumWeight
-	}
-	return 0
-}
+func (o *Options[K, V]) getMaximum() uint64 { _ = "STUB: not implemented"; return 0 }
 
-func (o *Options[K, V]) hasInitialCapacity() bool {
-	return o.InitialCapacity > 0
-}
+func (o *Options[K, V]) hasInitialCapacity() bool { _ = "STUB: not implemented"; return false }
 
-func (o *Options[K, V]) getInitialCapacity() int {
-	if o.hasInitialCapacity() {
-		return o.InitialCapacity
-	}
-	return defaultInitialCapacity
-}
+func (o *Options[K, V]) getInitialCapacity() int { _ = "STUB: not implemented"; return 0 }
 
-func (o *Options[K, V]) getExecutor() func(fn func()) {
-	if o.Executor == nil {
-		return defaultExecutor
-	}
-	return o.Executor
-}
+func (o *Options[K, V]) getExecutor() func(fn func()) { _ = "STUB: not implemented"; return nil }
 
 func (o *Options[K, V]) getWeigher() func(key K, value V) uint32 {
-	if o.Weigher == nil {
-		return func(key K, value V) uint32 {
-			return 1
-		}
-	}
-	return o.Weigher
-}
-
-func (o *Options[K, V]) getLogger() Logger {
-	if o.Logger == nil {
-		return newDefaultLogger()
-	}
-	return o.Logger
-}
-
-func (o *Options[K, V]) validate() error {
-	if o.MaximumSize > 0 && o.MaximumWeight > 0 {
-		return errors.New("otter: both maximumSize and maximumWeight are set")
-	}
-	if o.MaximumSize > 0 && o.Weigher != nil {
-		return errors.New("otter: both maximumSize and weigher are set")
-	}
-
-	if o.MaximumWeight > 0 && o.Weigher == nil {
-		return errors.New("otter: maximumWeight requires weigher")
-	}
-	if o.Weigher != nil && o.MaximumWeight <= 0 {
-		return errors.New("otter: weigher requires maximumWeight")
-	}
-
-	if o.MaximumSize < 0 {
-		return errors.New("otter: maximumSize should be positive")
-	}
-	if o.InitialCapacity < 0 {
-		return errors.New("otter: initial capacity should be positive")
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+func (o *Options[K, V]) getLogger() Logger { _ = "STUB: not implemented"; return *new(Logger) }
+
+func (o *Options[K, V]) validate() error { _ = "STUB: not implemented"; return nil }

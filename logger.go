@@ -31,22 +31,26 @@ type defaultLogger struct {
 	log *slog.Logger
 }
 
-func newDefaultLogger() *defaultLogger {
-	return &defaultLogger{
-		log: slog.Default(),
-	}
-}
+func newDefaultLogger() *defaultLogger { _ = "STUB: not implemented"; return nil }
 
 func (dl *defaultLogger) Warn(ctx context.Context, msg string, err error) {
-	dl.log.WarnContext(ctx, msg, slog.Any("err", err))
+	_ = "STUB: not implemented"
+	return
 }
 
 func (dl *defaultLogger) Error(ctx context.Context, msg string, err error) {
-	dl.log.ErrorContext(ctx, msg, slog.Any("err", err))
+	_ = "STUB: not implemented"
+	return
 }
 
 // NoopLogger is a stub implementation of [Logger] interface. It may be useful if error logging is not necessary.
 type NoopLogger struct{}
 
-func (nl *NoopLogger) Warn(ctx context.Context, msg string, err error)  {}
-func (nl *NoopLogger) Error(ctx context.Context, msg string, err error) {}
+func (nl *NoopLogger) Warn(ctx context.Context, msg string, err error) {
+	_ = "STUB: not implemented"
+	return
+}
+func (nl *NoopLogger) Error(ctx context.Context, msg string, err error) {
+	_ = "STUB: not implemented"
+	return
+}

@@ -17,7 +17,6 @@ package otter
 import (
 	"context"
 	"iter"
-	"runtime"
 	"time"
 
 	"github.com/maypok86/otter/v2/stats"
@@ -47,12 +46,7 @@ var computeOpStrings = []string{
 }
 
 // String implements [fmt.Stringer] interface.
-func (co ComputeOp) String() string {
-	if co >= 0 && int(co) < len(computeOpStrings) {
-		return computeOpStrings[co]
-	}
-	return "<unknown otter.ComputeOp>"
-}
+func (co ComputeOp) String() string { _ = "STUB: not implemented"; return "" }
 
 // Cache is an in-memory cache implementation that supports full concurrency of retrievals and multiple ways to bound the cache.
 type Cache[K comparable, V any] struct {
@@ -65,11 +59,8 @@ type Cache[K comparable, V any] struct {
 // This method does not alter the state of the [Options] instance, so it can be invoked
 // again to create multiple independent caches.
 func Must[K comparable, V any](o *Options[K, V]) *Cache[K, V] {
-	c, err := New(o)
-	if err != nil {
-		panic(err)
-	}
-	return c
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // New creates a configured [Cache] instance or
@@ -78,41 +69,30 @@ func Must[K comparable, V any](o *Options[K, V]) *Cache[K, V] {
 // This method does not alter the state of the [Options] instance, so it can be invoked
 // again to create multiple independent caches.
 func New[K comparable, V any](o *Options[K, V]) (*Cache[K, V], error) {
-	if o == nil {
-		o = &Options[K, V]{}
-	}
-
-	if err := o.validate(); err != nil {
-		return nil, err
-	}
-
-	cacheImpl := newCache(o)
-	c := &Cache[K, V]{
-		cache: cacheImpl,
-	}
-	runtime.AddCleanup(c, func(cacheImpl *cache[K, V]) {
-		cacheImpl.StopAllGoroutines()
-	}, cacheImpl)
-
-	return c, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetIfPresent returns the value associated with the key in this cache.
 func (c *Cache[K, V]) GetIfPresent(key K) (V, bool) {
-	return c.cache.GetIfPresent(key)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // GetEntry returns the cache entry associated with the key in this cache.
 func (c *Cache[K, V]) GetEntry(key K) (Entry[K, V], bool) {
-	return c.cache.GetEntry(key)
+	_ = "STUB: not implemented"
+	return nil, false
+
+	// GetEntryQuietly returns the cache entry associated with the key in this cache.
+	//
+	// Unlike GetEntry, this function does not produce any side effects
+	// such as updating statistics or the eviction policy.
 }
 
-// GetEntryQuietly returns the cache entry associated with the key in this cache.
-//
-// Unlike GetEntry, this function does not produce any side effects
-// such as updating statistics or the eviction policy.
 func (c *Cache[K, V]) GetEntryQuietly(key K) (Entry[K, V], bool) {
-	return c.cache.GetEntryQuietly(key)
+	_ = "STUB: not implemented"
+	return nil, false
 }
 
 // Set associates the value with the key in this cache.
@@ -121,7 +101,8 @@ func (c *Cache[K, V]) GetEntryQuietly(key K) (Entry[K, V], bool) {
 //
 // If the specified key is already associated with a value, then it returns existing value and false.
 func (c *Cache[K, V]) Set(key K, value V) (V, bool) {
-	return c.cache.Set(key, value)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // SetIfAbsent if the specified key is not already associated with a value associates it with the given value.
@@ -130,7 +111,8 @@ func (c *Cache[K, V]) Set(key K, value V) (V, bool) {
 //
 // If the specified key is already associated with a value, then it returns existing value and false.
 func (c *Cache[K, V]) SetIfAbsent(key K, value V) (V, bool) {
-	return c.cache.SetIfAbsent(key, value)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // Compute either sets the computed new value for the key,
@@ -158,7 +140,8 @@ func (c *Cache[K, V]) Compute(
 	key K,
 	remappingFunc func(oldValue V, found bool) (newValue V, op ComputeOp),
 ) (actualValue V, ok bool) {
-	return c.cache.Compute(key, remappingFunc)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // ComputeIfAbsent returns the existing value for the key if
@@ -179,7 +162,8 @@ func (c *Cache[K, V]) ComputeIfAbsent(
 	key K,
 	mappingFunc func() (newValue V, cancel bool),
 ) (actualValue V, ok bool) {
-	return c.cache.ComputeIfAbsent(key, mappingFunc)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // ComputeIfPresent returns the zero value for type V if the key is not found.
@@ -210,19 +194,22 @@ func (c *Cache[K, V]) ComputeIfPresent(
 	key K,
 	remappingFunc func(oldValue V) (newValue V, op ComputeOp),
 ) (actualValue V, ok bool) {
-	return c.cache.ComputeIfPresent(key, remappingFunc)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // SetExpiresAfter specifies that the entry should be automatically removed from the cache once the duration has
 // elapsed. The expiration policy determines when the entry's age is reset.
 func (c *Cache[K, V]) SetExpiresAfter(key K, expiresAfter time.Duration) {
-	c.cache.SetExpiresAfter(key, expiresAfter)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetRefreshableAfter specifies that each entry should be eligible for reloading once a fixed duration has elapsed.
 // The refresh policy determines when the entry's age is reset.
 func (c *Cache[K, V]) SetRefreshableAfter(key K, refreshableAfter time.Duration) {
-	c.cache.SetRefreshableAfter(key, refreshableAfter)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Get returns the value associated with key in this cache, obtaining that value from loader if necessary.
@@ -252,7 +239,8 @@ func (c *Cache[K, V]) SetRefreshableAfter(key K, refreshableAfter time.Duration)
 // for an RPC may wait for a similar call that requests a long timeout, or a call by an
 // unprivileged user may return a resource accessible only to a privileged user making a similar call.
 func (c *Cache[K, V]) Get(ctx context.Context, key K, loader Loader[K, V]) (V, error) {
-	return c.cache.Get(ctx, key, loader)
+	_ = "STUB: not implemented"
+	return *new(V), nil
 }
 
 // BulkGet returns the value associated with key in this cache, obtaining that value from loader if necessary.
@@ -278,7 +266,8 @@ func (c *Cache[K, V]) Get(ctx context.Context, key K, loader Loader[K, V]) (V, e
 // for an RPC may wait for a similar call that requests a long timeout, or a call by an
 // unprivileged user may return a resource accessible only to a privileged user making a similar call.
 func (c *Cache[K, V]) BulkGet(ctx context.Context, keys []K, bulkLoader BulkLoader[K, V]) (map[K]V, error) {
-	return c.cache.BulkGet(ctx, keys, bulkLoader)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Refresh loads a new value for the key, asynchronously. While the new value is loading the
@@ -308,7 +297,8 @@ func (c *Cache[K, V]) BulkGet(ctx context.Context, keys []K, bulkLoader BulkLoad
 // for an RPC may wait for a similar call that requests a long timeout, or a call by an
 // unprivileged user may return a resource accessible only to a privileged user making a similar call.
 func (c *Cache[K, V]) Refresh(ctx context.Context, key K, loader Loader[K, V]) <-chan RefreshResult[K, V] {
-	return c.cache.Refresh(ctx, key, loader)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BulkRefresh loads a new value for each key, asynchronously. While the new value is loading the
@@ -339,7 +329,8 @@ func (c *Cache[K, V]) Refresh(ctx context.Context, key K, loader Loader[K, V]) <
 // for an RPC may wait for a similar call that requests a long timeout, or a call by an
 // unprivileged user may return a resource accessible only to a privileged user making a similar call.
 func (c *Cache[K, V]) BulkRefresh(ctx context.Context, keys []K, bulkLoader BulkLoader[K, V]) <-chan []RefreshResult[K, V] {
-	return c.cache.BulkRefresh(ctx, keys, bulkLoader)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Invalidate discards any cached value for the key.
@@ -347,7 +338,8 @@ func (c *Cache[K, V]) BulkRefresh(ctx context.Context, keys []K, bulkLoader Bulk
 // Returns previous value if any. The invalidated result reports whether the key was
 // present.
 func (c *Cache[K, V]) Invalidate(key K) (value V, invalidated bool) {
-	return c.cache.Invalidate(key)
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
 
 // All returns an iterator over all key-value pairs in the cache.
@@ -356,9 +348,7 @@ func (c *Cache[K, V]) Invalidate(key K) (value V, invalidated bool) {
 // Iterator is at least weakly consistent: he is safe for concurrent use,
 // but if the cache is modified (including by eviction) after the iterator is
 // created, it is undefined which of the changes (if any) will be reflected in that iterator.
-func (c *Cache[K, V]) All() iter.Seq2[K, V] {
-	return c.cache.All()
-}
+func (c *Cache[K, V]) All() iter.Seq2[K, V] { _ = "STUB: not implemented"; return nil }
 
 // Keys returns an iterator over all keys in the cache.
 // The iteration order is not specified and is not guaranteed to be the same from one call to the next.
@@ -366,9 +356,7 @@ func (c *Cache[K, V]) All() iter.Seq2[K, V] {
 // Iterator is at least weakly consistent: he is safe for concurrent use,
 // but if the cache is modified (including by eviction) after the iterator is
 // created, it is undefined which of the changes (if any) will be reflected in that iterator.
-func (c *Cache[K, V]) Keys() iter.Seq[K] {
-	return c.cache.Keys()
-}
+func (c *Cache[K, V]) Keys() iter.Seq[K] { _ = "STUB: not implemented"; return nil }
 
 // Values returns an iterator over all values in the cache.
 // The iteration order is not specified and is not guaranteed to be the same from one call to the next.
@@ -376,59 +364,45 @@ func (c *Cache[K, V]) Keys() iter.Seq[K] {
 // Iterator is at least weakly consistent: he is safe for concurrent use,
 // but if the cache is modified (including by eviction) after the iterator is
 // created, it is undefined which of the changes (if any) will be reflected in that iterator.
-func (c *Cache[K, V]) Values() iter.Seq[V] {
-	return c.cache.Values()
-}
+func (c *Cache[K, V]) Values() iter.Seq[V] { _ = "STUB: not implemented"; return nil }
 
 // InvalidateAll discards all entries in the cache. The behavior of this operation is undefined for an entry
 // that is being loaded (or reloaded) and is otherwise not present.
-func (c *Cache[K, V]) InvalidateAll() {
-	c.cache.InvalidateAll()
-}
+func (c *Cache[K, V]) InvalidateAll() { _ = "STUB: not implemented"; return }
 
 // CleanUp performs any pending maintenance operations needed by the cache. Exactly which activities are
 // performed -- if any -- is implementation-dependent.
 func (c *Cache[K, V]) CleanUp() {
-	c.cache.CleanUp()
+	_ = "STUB: not implemented"
+
+	// SetMaximum specifies the maximum total size of this cache. This value may be interpreted as the weighted
+	// or unweighted threshold size based on how this cache was constructed. If the cache currently
+	// exceeds the new maximum size this operation eagerly evict entries until the cache shrinks to
+	// the appropriate size.
+	return
 }
 
-// SetMaximum specifies the maximum total size of this cache. This value may be interpreted as the weighted
-// or unweighted threshold size based on how this cache was constructed. If the cache currently
-// exceeds the new maximum size this operation eagerly evict entries until the cache shrinks to
-// the appropriate size.
-func (c *Cache[K, V]) SetMaximum(maximum uint64) {
-	c.cache.SetMaximum(maximum)
-}
+func (c *Cache[K, V]) SetMaximum(maximum uint64) { _ = "STUB: not implemented"; return }
 
 // GetMaximum returns the maximum total weighted or unweighted size of this cache, depending on how the
 // cache was constructed. If this cache does not use a (weighted) size bound, then the method will return math.MaxUint64.
-func (c *Cache[K, V]) GetMaximum() uint64 {
-	return c.cache.GetMaximum()
-}
+func (c *Cache[K, V]) GetMaximum() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // EstimatedSize returns the approximate number of entries in this cache. The value returned is an estimate; the
 // actual count may differ if there are concurrent insertions or deletions, or if some entries are
 // pending deletion due to expiration. In the case of stale entries
 // this inaccuracy can be mitigated by performing a CleanUp first.
-func (c *Cache[K, V]) EstimatedSize() int {
-	return c.cache.EstimatedSize()
-}
+func (c *Cache[K, V]) EstimatedSize() int { _ = "STUB: not implemented"; return 0 }
 
 // IsWeighted returns whether the cache is bounded by a maximum size or maximum weight.
-func (c *Cache[K, V]) IsWeighted() bool {
-	return c.cache.IsWeighted()
-}
+func (c *Cache[K, V]) IsWeighted() bool { _ = "STUB: not implemented"; return false }
 
 // WeightedSize returns the approximate accumulated weight of entries in this cache. If this cache does not
 // use a weighted size bound, then the method will return 0.
-func (c *Cache[K, V]) WeightedSize() uint64 {
-	return c.cache.WeightedSize()
-}
+func (c *Cache[K, V]) WeightedSize() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // IsRecordingStats returns whether the cache statistics are being accumulated.
-func (c *Cache[K, V]) IsRecordingStats() bool {
-	return c.cache.IsRecordingStats()
-}
+func (c *Cache[K, V]) IsRecordingStats() bool { _ = "STUB: not implemented"; return false }
 
 // Stats returns a current snapshot of this cache's cumulative statistics.
 // All statistics are initialized to zero and are monotonically increasing over the lifetime of the cache.
@@ -438,20 +412,21 @@ func (c *Cache[K, V]) IsRecordingStats() bool {
 // NOTE: If your [stats.Recorder] implementation doesn't also implement [stats.Snapshoter],
 // this method will always return a zero-value snapshot.
 func (c *Cache[K, V]) Stats() stats.Stats {
-	return c.cache.Stats()
+	_ = "STUB: not implemented"
+	return *
+
+	// Hottest returns an iterator for ordered traversal of the cache entries. The order of
+	// iteration is from the entries most likely to be retained (hottest) to the entries least
+	// likely to be retained (coldest). This order is determined by the eviction policy's best guess
+	// at the start of the iteration.
+	//
+	// WARNING: Beware that this iteration is performed within the eviction policy's exclusive lock, so the
+	// iteration should be short and simple. While the iteration is in progress further eviction
+	// maintenance will be halted.
+	new(stats.Stats)
 }
 
-// Hottest returns an iterator for ordered traversal of the cache entries. The order of
-// iteration is from the entries most likely to be retained (hottest) to the entries least
-// likely to be retained (coldest). This order is determined by the eviction policy's best guess
-// at the start of the iteration.
-//
-// WARNING: Beware that this iteration is performed within the eviction policy's exclusive lock, so the
-// iteration should be short and simple. While the iteration is in progress further eviction
-// maintenance will be halted.
-func (c *Cache[K, V]) Hottest() iter.Seq[Entry[K, V]] {
-	return c.cache.Hottest()
-}
+func (c *Cache[K, V]) Hottest() iter.Seq[Entry[K, V]] { _ = "STUB: not implemented"; return nil }
 
 // Coldest returns an iterator for ordered traversal of the cache entries. The order of
 // iteration is from the entries least likely to be retained (coldest) to the entries most
@@ -461,9 +436,7 @@ func (c *Cache[K, V]) Hottest() iter.Seq[Entry[K, V]] {
 // WARNING: Beware that this iteration is performed within the eviction policy's exclusive lock, so the
 // iteration should be short and simple. While the iteration is in progress further eviction
 // maintenance will be halted.
-func (c *Cache[K, V]) Coldest() iter.Seq[Entry[K, V]] {
-	return c.cache.Coldest()
-}
+func (c *Cache[K, V]) Coldest() iter.Seq[Entry[K, V]] { _ = "STUB: not implemented"; return nil }
 
 // StopAllGoroutines stops all goroutines launched by the cache.
 // It returns true if the call stops goroutines, false if goroutines have already been stopped.
@@ -474,10 +447,6 @@ func (c *Cache[K, V]) Coldest() iter.Seq[Entry[K, V]] {
 //
 // NOTE: This method only stops the goroutines and does not invalidate entries in the cache.
 // To invalidate entries, you can use the Invalidate / InvalidateAll methods.
-func (c *Cache[K, V]) StopAllGoroutines() bool {
-	return c.cache.StopAllGoroutines()
-}
+func (c *Cache[K, V]) StopAllGoroutines() bool { _ = "STUB: not implemented"; return false }
 
-func (c *Cache[K, V]) has(key K) bool {
-	return c.cache.has(key)
-}
+func (c *Cache[K, V]) has(key K) bool { _ = "STUB: not implemented"; return false }

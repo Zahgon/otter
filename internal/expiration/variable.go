@@ -15,7 +15,6 @@
 package expiration
 
 import (
-	"math"
 	"math/bits"
 	"time"
 
@@ -48,66 +47,29 @@ type Variable[K comparable, V any] struct {
 }
 
 func NewVariable[K comparable, V any](nodeManager *node.Manager[K, V]) *Variable[K, V] {
-	wheel := make([][]node.Node[K, V], len(buckets))
-	for i := 0; i < len(wheel); i++ {
-		wheel[i] = make([]node.Node[K, V], buckets[i])
-		for j := 0; j < len(wheel[i]); j++ {
-			var k K
-			var v V
-			fn := nodeManager.Create(k, v, math.MaxInt64, math.MaxInt64, 1)
-			fn.SetPrevExp(fn)
-			fn.SetNextExp(fn)
-			wheel[i][j] = fn
-		}
-	}
-	return &Variable[K, V]{
-		wheel: wheel,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // findBucket determines the bucket that the timer event should be added to.
 func (v *Variable[K, V]) findBucket(expiration uint64) node.Node[K, V] {
-	duration := expiration - v.time
-	length := len(v.wheel) - 1
-	for i := 0; i < length; i++ {
-		if duration < spans[i+1] {
-			ticks := expiration >> shift[i]
-			index := ticks & (buckets[i] - 1)
-			return v.wheel[i][index]
-		}
-	}
-	return v.wheel[length][0]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Add schedules a timer event for the node.
 func (v *Variable[K, V]) Add(n node.Node[K, V]) {
+	_ = "STUB: not implemented"
 	//nolint:gosec // there is no overflow
-	root := v.findBucket(uint64(n.ExpiresAt()))
-	link(root, n)
+	return
 }
 
 // Delete removes a timer event for this entry if present.
-func (v *Variable[K, V]) Delete(n node.Node[K, V]) {
-	unlink(n)
-	n.SetNextExp(nil)
-	n.SetPrevExp(nil)
-}
+func (v *Variable[K, V]) Delete(n node.Node[K, V]) { _ = "STUB: not implemented"; return }
 
 func (v *Variable[K, V]) DeleteExpired(nowNanos int64, expireNode func(n node.Node[K, V], nowNanos int64)) {
-	currentTime := uint64(nowNanos)
-	prevTime := v.time
-	v.time = currentTime
-
-	for i := 0; i < len(shift); i++ {
-		previousTicks := prevTime >> shift[i]
-		currentTicks := currentTime >> shift[i]
-		delta := currentTicks - previousTicks
-		if delta == 0 {
-			break
-		}
-
-		v.deleteExpiredFromBucket(i, previousTicks, delta, expireNode)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (v *Variable[K, V]) deleteExpiredFromBucket(
@@ -115,48 +77,12 @@ func (v *Variable[K, V]) deleteExpiredFromBucket(
 	prevTicks, delta uint64,
 	expireNode func(n node.Node[K, V], nowNanos int64),
 ) {
-	mask := buckets[index] - 1
-	steps := min(delta+1, buckets[index])
-	start := prevTicks & mask
-	end := start + steps
-	timerWheel := v.wheel[index]
-	for i := start; i < end; i++ {
-		root := timerWheel[i&mask]
-		n := root.NextExp()
-		root.SetPrevExp(root)
-		root.SetNextExp(root)
-
-		for !node.Equals(n, root) {
-			next := n.NextExp()
-			n.SetPrevExp(nil)
-			n.SetNextExp(nil)
-
-			if uint64(n.ExpiresAt()) < v.time {
-				expireNode(n, int64(v.time))
-			} else {
-				v.Add(n)
-			}
-
-			n = next
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // link adds the entry at the tail of the bucket's list.
-func link[K comparable, V any](root, n node.Node[K, V]) {
-	n.SetPrevExp(root.PrevExp())
-	n.SetNextExp(root)
-
-	root.PrevExp().SetNextExp(n)
-	root.SetPrevExp(n)
-}
+func link[K comparable, V any](root, n node.Node[K, V]) { _ = "STUB: not implemented"; return }
 
 // unlink removes the entry from its bucket, if scheduled.
-func unlink[K comparable, V any](n node.Node[K, V]) {
-	next := n.NextExp()
-	if !node.Equals(next, nil) {
-		prev := n.PrevExp()
-		next.SetPrevExp(prev)
-		prev.SetNextExp(next)
-	}
-}
+func unlink[K comparable, V any](n node.Node[K, V]) { _ = "STUB: not implemented"; return }

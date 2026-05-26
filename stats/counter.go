@@ -15,7 +15,6 @@
 package stats
 
 import (
-	"math"
 	"sync/atomic"
 	"time"
 
@@ -37,66 +36,42 @@ type Counter struct {
 }
 
 // NewCounter constructs a [Counter] instance with all counts initialized to zero.
-func NewCounter() *Counter {
-	return &Counter{
-		hits:   xsync.NewAdder(),
-		misses: xsync.NewAdder(),
-	}
-}
+func NewCounter() *Counter { _ = "STUB: not implemented"; return nil }
 
 // Snapshot returns a snapshot of this recorder's values. Note that this may be an inconsistent view, as it
 // may be interleaved with update operations.
 //
 // NOTE: the values of the metrics are undefined in case of overflow. If you require specific handling, we recommend
 // implementing your own [Recorder].
-func (c *Counter) Snapshot() Stats {
-	totalLoadTime := c.totalLoadTime.Load()
-	if totalLoadTime > uint64(math.MaxInt64) {
-		totalLoadTime = uint64(math.MaxInt64)
-	}
-	return Stats{
-		Hits:           c.hits.Value(),
-		Misses:         c.misses.Value(),
-		Evictions:      c.evictions.Load(),
-		EvictionWeight: c.evictionWeight.Load(),
-		LoadSuccesses:  c.loadSuccesses.Load(),
-		LoadFailures:   c.loadFailures.Load(),
-		TotalLoadTime:  time.Duration(totalLoadTime),
-	}
-}
+func (c *Counter) Snapshot() Stats { _ = "STUB: not implemented"; return *new(Stats) }
 
 // RecordHits records cache hits. This should be called when a cache request returns a cached value.
 func (c *Counter) RecordHits(count int) {
+	_ = "STUB: not implemented"
 	//nolint:gosec // there is no overflow
-	c.hits.Add(uint64(count))
+	return
 }
 
 // RecordMisses records cache misses. This should be called when a cache request returns a value that was not
 // found in the cache.
 func (c *Counter) RecordMisses(count int) {
+	_ = "STUB: not implemented"
 	//nolint:gosec // there is no overflow
-	c.misses.Add(uint64(count))
+	return
 }
 
 // RecordEviction records the eviction of an entry from the cache. This should only been called when an entry is
 // evicted due to the cache's eviction strategy, and not as a result of manual deletions.
-func (c *Counter) RecordEviction(weight uint32) {
-	c.evictions.Add(1)
-	c.evictionWeight.Add(uint64(weight))
-}
+func (c *Counter) RecordEviction(weight uint32) { _ = "STUB: not implemented"; return }
 
 // RecordLoadSuccess records the successful load of a new entry. This method should be called when a cache request
 // causes an entry to be loaded and the loading completes successfully (either no error or otter.ErrNotFound).
-func (c *Counter) RecordLoadSuccess(loadTime time.Duration) {
-	c.loadSuccesses.Add(1)
-	//nolint:gosec // there is no overflow
-	c.totalLoadTime.Add(uint64(loadTime))
-}
+func (c *Counter) RecordLoadSuccess(loadTime time.Duration) { _ = "STUB: not implemented"; return }
+
+//nolint:gosec // there is no overflow
 
 // RecordLoadFailure records the failed load of a new entry. This method should be called when a cache request
 // causes an entry to be loaded, but the loading function returns an error that is not otter.ErrNotFound.
-func (c *Counter) RecordLoadFailure(loadTime time.Duration) {
-	c.loadFailures.Add(1)
-	//nolint:gosec // there is no overflow
-	c.totalLoadTime.Add(uint64(loadTime))
-}
+func (c *Counter) RecordLoadFailure(loadTime time.Duration) { _ = "STUB: not implemented"; return }
+
+//nolint:gosec // there is no overflow

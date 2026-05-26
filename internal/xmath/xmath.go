@@ -14,49 +14,11 @@
 
 package xmath
 
-import "math"
-
-func Abs(a int64) int64 {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
+func Abs(a int64) int64 { _ = "STUB: not implemented"; return 0 }
 
 // RoundUpPowerOf2 is based on https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2.
-func RoundUpPowerOf2(v uint32) uint32 {
-	if v == 0 {
-		return 1
-	}
-	v--
-	v |= v >> 1
-	v |= v >> 2
-	v |= v >> 4
-	v |= v >> 8
-	v |= v >> 16
-	v++
-	return v
-}
+func RoundUpPowerOf2(v uint32) uint32 { _ = "STUB: not implemented"; return 0 }
 
-func RoundUpPowerOf264(x uint64) uint64 {
-	if x == 0 {
-		return 1
-	}
-	x--
-	x |= x >> 1
-	x |= x >> 2
-	x |= x >> 4
-	x |= x >> 8
-	x |= x >> 16
-	x |= x >> 32
-	x++
-	return x
-}
+func RoundUpPowerOf264(x uint64) uint64 { _ = "STUB: not implemented"; return 0 }
 
-func SaturatedAdd(a, b int64) int64 {
-	s := a + b
-	if s < a || s < b {
-		return math.MaxInt64
-	}
-	return s
-}
+func SaturatedAdd(a, b int64) int64 { _ = "STUB: not implemented"; return 0 }

@@ -16,8 +16,6 @@ package xruntime
 
 import (
 	"math"
-	"math/rand/v2"
-	"runtime"
 	"time"
 )
 
@@ -30,17 +28,15 @@ const (
 
 // Parallelism returns the maximum possible number of concurrently running goroutines.
 func Parallelism() uint32 {
+	_ = "STUB: not implemented"
 	//nolint:gosec // there will never be an overflow
-	maxProcs := uint32(runtime.GOMAXPROCS(0))
-	//nolint:gosec // there will never be an overflow
-	numCPU := uint32(runtime.NumCPU())
-	if maxProcs < numCPU {
-		return maxProcs
-	}
-	return numCPU
+	return 0
 }
 
+//nolint:gosec // there will never be an overflow
+
 func Fastrand() uint32 {
+	_ = "STUB: not implemented"
 	//nolint:gosec // we don't need a cryptographically secure random number generator
-	return rand.Uint32()
+	return 0
 }

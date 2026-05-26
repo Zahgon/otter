@@ -6,20 +6,6 @@ type sender[T any] struct {
 	limit  *uint
 }
 
-func newSender[T any](s Stream[T], limit *uint) *sender[T] {
-	return &sender[T]{
-		s:     s,
-		limit: limit,
-	}
-}
+func newSender[T any](s Stream[T], limit *uint) *sender[T] { _ = "STUB: not implemented"; return nil }
 
-func (s *sender[T]) Send(event T) bool {
-	if s.limit != nil && s.events >= *s.limit {
-		return true
-	}
-
-	s.s.asSender() <- event
-
-	s.events++
-	return false
-}
+func (s *sender[T]) Send(event T) bool { _ = "STUB: not implemented"; return false }

@@ -1,49 +1,17 @@
 package trace
 
 import (
-	"compress/gzip"
-	"fmt"
 	"io"
-	"os"
-	"path/filepath"
-
-	"github.com/klauspost/compress/zstd"
-	"github.com/ulikunitz/xz"
 )
 
 func wrapDecoder(r io.Reader, path string) (io.Reader, error) {
-	ext := filepath.Ext(path)
-
-	switch ext {
-	case ".gz":
-		gzipReader, err := gzip.NewReader(r)
-		if err != nil {
-			return nil, fmt.Errorf("not valid .gzip file: %w", err)
-		}
-		return gzipReader, nil
-	case ".zst":
-		zstdReader, err := zstd.NewReader(r)
-		if err != nil {
-			return nil, fmt.Errorf("not valid .zst file")
-		}
-		return zstdReader, nil
-	case ".xz":
-		xzReader, err := xz.NewReader(r)
-		if err != nil {
-			return nil, fmt.Errorf("not valid .xz file")
-		}
-		return xzReader, nil
-	default:
-		// without decoding
-		return r, nil
-	}
+	_ = "STUB: not implemented"
+	return *new(io.Reader), nil
 }
 
-func NewReader(path string) (io.Reader, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, fmt.Errorf("open file: %w", err)
-	}
+// without decoding
 
-	return wrapDecoder(file, path)
+func NewReader(path string) (io.Reader, error) {
+	_ = "STUB: not implemented"
+	return *new(io.Reader), nil
 }

@@ -32,166 +32,81 @@ type BSER[K comparable, V any] struct {
 
 // NewBSER creates a new BSER.
 func NewBSER[K comparable, V any](key K, value V, expiresAt, refreshableAt int64, weight uint32) Node[K, V] {
-	n := &BSER[K, V]{
-		key:   key,
-		value: value,
-	}
-	n.expiresAt.Store(expiresAt)
-	n.refreshableAt.Store(refreshableAt)
-	n.state.Store(aliveState)
-
-	return n
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CastPointerToBSER casts a pointer to BSER.
 func CastPointerToBSER[K comparable, V any](ptr unsafe.Pointer) Node[K, V] {
-	return (*BSER[K, V])(ptr)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (n *BSER[K, V]) Key() K {
-	return n.key
-}
+func (n *BSER[K, V]) Key() K { _ = "STUB: not implemented"; return *new(K) }
 
-func (n *BSER[K, V]) Value() V {
-	return n.value
-}
+func (n *BSER[K, V]) Value() V { _ = "STUB: not implemented"; return *new(V) }
 
 func (n *BSER[K, V]) AsPointer() unsafe.Pointer {
-	return unsafe.Pointer(n)
+	_ = "STUB: not implemented"
+	return *new(unsafe.Pointer)
 }
 
-func (n *BSER[K, V]) Prev() Node[K, V] {
-	return n.prev
-}
+func (n *BSER[K, V]) Prev() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BSER[K, V]) SetPrev(v Node[K, V]) {
-	if v == nil {
-		n.prev = nil
-		return
-	}
-	n.prev = (*BSER[K, V])(v.AsPointer())
-}
+func (n *BSER[K, V]) SetPrev(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) Next() Node[K, V] {
-	return n.next
-}
+func (n *BSER[K, V]) Next() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BSER[K, V]) SetNext(v Node[K, V]) {
-	if v == nil {
-		n.next = nil
-		return
-	}
-	n.next = (*BSER[K, V])(v.AsPointer())
-}
+func (n *BSER[K, V]) SetNext(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) PrevExp() Node[K, V] {
-	return n.prevExp
-}
+func (n *BSER[K, V]) PrevExp() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BSER[K, V]) SetPrevExp(v Node[K, V]) {
-	if v == nil {
-		n.prevExp = nil
-		return
-	}
-	n.prevExp = (*BSER[K, V])(v.AsPointer())
-}
+func (n *BSER[K, V]) SetPrevExp(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) NextExp() Node[K, V] {
-	return n.nextExp
-}
+func (n *BSER[K, V]) NextExp() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BSER[K, V]) SetNextExp(v Node[K, V]) {
-	if v == nil {
-		n.nextExp = nil
-		return
-	}
-	n.nextExp = (*BSER[K, V])(v.AsPointer())
-}
+func (n *BSER[K, V]) SetNextExp(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) HasExpired(now int64) bool {
-	return n.ExpiresAt() <= now
-}
+func (n *BSER[K, V]) HasExpired(now int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) ExpiresAt() int64 {
-	return n.expiresAt.Load()
-}
+func (n *BSER[K, V]) ExpiresAt() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BSER[K, V]) CASExpiresAt(old, new int64) bool {
-	return n.expiresAt.CompareAndSwap(old, new)
-}
+func (n *BSER[K, V]) CASExpiresAt(old, new int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) SetExpiresAt(new int64) {
-	n.expiresAt.Store(new)
-}
+func (n *BSER[K, V]) SetExpiresAt(new int64) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) RefreshableAt() int64 {
-	return n.refreshableAt.Load()
-}
+func (n *BSER[K, V]) RefreshableAt() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BSER[K, V]) CASRefreshableAt(old, new int64) bool {
-	return n.refreshableAt.CompareAndSwap(old, new)
-}
+func (n *BSER[K, V]) CASRefreshableAt(old, new int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) SetRefreshableAt(new int64) {
-	n.refreshableAt.Store(new)
-}
+func (n *BSER[K, V]) SetRefreshableAt(new int64) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) IsFresh(now int64) bool {
-	return n.IsAlive() && n.RefreshableAt() > now
-}
+func (n *BSER[K, V]) IsFresh(now int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) Weight() uint32 {
-	return 1
-}
+func (n *BSER[K, V]) Weight() uint32 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BSER[K, V]) IsAlive() bool {
-	return n.state.Load() == aliveState
-}
+func (n *BSER[K, V]) IsAlive() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) IsRetired() bool {
-	return n.state.Load() == retiredState
-}
+func (n *BSER[K, V]) IsRetired() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) Retire() {
-	n.state.Store(retiredState)
-}
+func (n *BSER[K, V]) Retire() { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) IsDead() bool {
-	return n.state.Load() == deadState
-}
+func (n *BSER[K, V]) IsDead() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) Die() {
-	n.state.Store(deadState)
-}
+func (n *BSER[K, V]) Die() { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) GetQueueType() uint8 {
-	return n.queueType
-}
+func (n *BSER[K, V]) GetQueueType() uint8 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BSER[K, V]) SetQueueType(queueType uint8) {
-	n.queueType = queueType
-}
+func (n *BSER[K, V]) SetQueueType(queueType uint8) { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) InWindow() bool {
-	return n.GetQueueType() == InWindowQueue
-}
+func (n *BSER[K, V]) InWindow() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) MakeWindow() {
-	n.SetQueueType(InWindowQueue)
-}
+func (n *BSER[K, V]) MakeWindow() { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) InMainProbation() bool {
-	return n.GetQueueType() == InMainProbationQueue
-}
+func (n *BSER[K, V]) InMainProbation() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) MakeMainProbation() {
-	n.SetQueueType(InMainProbationQueue)
-}
+func (n *BSER[K, V]) MakeMainProbation() { _ = "STUB: not implemented"; return }
 
-func (n *BSER[K, V]) InMainProtected() bool {
-	return n.GetQueueType() == InMainProtectedQueue
-}
+func (n *BSER[K, V]) InMainProtected() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BSER[K, V]) MakeMainProtected() {
-	n.SetQueueType(InMainProtectedQueue)
-}
+func (n *BSER[K, V]) MakeMainProtected() { _ = "STUB: not implemented"; return }

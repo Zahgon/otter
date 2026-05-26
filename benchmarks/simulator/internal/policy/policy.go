@@ -11,38 +11,14 @@ type Policy struct {
 	misses uint64
 }
 
-func NewPolicy(c product.Policy[uint64, uint64]) *Policy {
-	return &Policy{
-		policy: c,
-	}
-}
+func NewPolicy(c product.Policy[uint64, uint64]) *Policy { _ = "STUB: not implemented"; return nil }
 
-func (p *Policy) Record(e event.AccessEvent) {
-	key := e.Key()
-	value, ok := p.policy.Get(key)
-	if ok {
-		if key != value {
-			panic("not valid value")
-		}
-		p.hits++
-	} else {
-		p.policy.Set(key, key)
-		p.misses++
-	}
-}
+func (p *Policy) Record(e event.AccessEvent) { _ = "STUB: not implemented"; return }
 
-func (p *Policy) Name() string {
-	return p.policy.Name()
-}
+func (p *Policy) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (p *Policy) Init(capacity int) {
-	p.policy.Init(capacity)
-}
+func (p *Policy) Init(capacity int) { _ = "STUB: not implemented"; return }
 
-func (p *Policy) Ratio() float64 {
-	return 100 * (float64(p.hits) / float64(p.hits+p.misses))
-}
+func (p *Policy) Ratio() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (p *Policy) Close() {
-	p.policy.Close()
-}
+func (p *Policy) Close() { _ = "STUB: not implemented"; return }

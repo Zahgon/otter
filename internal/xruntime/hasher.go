@@ -20,12 +20,6 @@ type Hasher[T comparable] struct {
 	seed maphash.Seed
 }
 
-func NewHasher[T comparable]() Hasher[T] {
-	return Hasher[T]{
-		seed: maphash.MakeSeed(),
-	}
-}
+func NewHasher[T comparable]() Hasher[T] { _ = "STUB: not implemented"; return nil }
 
-func (h Hasher[T]) Hash(t T) uint64 {
-	return maphash.Comparable(h.seed, t)
-}
+func (h Hasher[T]) Hash(t T) uint64 { _ = "STUB: not implemented"; return 0 }

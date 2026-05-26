@@ -42,33 +42,34 @@ type varExpiryCreating[K comparable, V any] struct {
 }
 
 func (c *varExpiryCreating[K, V]) ExpireAfterCreate(entry Entry[K, V]) time.Duration {
-	return c.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (c *varExpiryCreating[K, V]) ExpireAfterUpdate(entry Entry[K, V], oldValue V) time.Duration {
-	return entry.ExpiresAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (c *varExpiryCreating[K, V]) ExpireAfterRead(entry Entry[K, V]) time.Duration {
-	return entry.ExpiresAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // ExpiryCreating returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
 // the cache once the duration has elapsed after the entry's creation. The expiration time is
 // not modified when the entry is updated or read.
 func ExpiryCreating[K comparable, V any](duration time.Duration) ExpiryCalculator[K, V] {
-	return ExpiryCreatingFunc(func(entry Entry[K, V]) time.Duration {
-		return duration
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExpiryCreatingFunc returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
 // the cache once the duration has elapsed after the entry's creation. The expiration time is
 // not modified when the entry is updated or read.
 func ExpiryCreatingFunc[K comparable, V any](f func(entry Entry[K, V]) time.Duration) ExpiryCalculator[K, V] {
-	return &varExpiryCreating[K, V]{
-		f: f,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type varExpiryWriting[K comparable, V any] struct {
@@ -76,33 +77,34 @@ type varExpiryWriting[K comparable, V any] struct {
 }
 
 func (w *varExpiryWriting[K, V]) ExpireAfterCreate(entry Entry[K, V]) time.Duration {
-	return w.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (w *varExpiryWriting[K, V]) ExpireAfterUpdate(entry Entry[K, V], oldValue V) time.Duration {
-	return w.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (w *varExpiryWriting[K, V]) ExpireAfterRead(entry Entry[K, V]) time.Duration {
-	return entry.ExpiresAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // ExpiryWriting returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
 // the cache once the duration has elapsed after the entry's creation or replacement of its value.
 // The expiration time is not modified when the entry is read.
 func ExpiryWriting[K comparable, V any](duration time.Duration) ExpiryCalculator[K, V] {
-	return ExpiryWritingFunc(func(entry Entry[K, V]) time.Duration {
-		return duration
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExpiryWritingFunc returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
 // the cache once the duration has elapsed after the entry's creation or replacement of its value.
 // The expiration time is not modified when the entry is read.
 func ExpiryWritingFunc[K comparable, V any](f func(entry Entry[K, V]) time.Duration) ExpiryCalculator[K, V] {
-	return &varExpiryWriting[K, V]{
-		f: f,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type varExpiryAccessing[K comparable, V any] struct {
@@ -110,31 +112,33 @@ type varExpiryAccessing[K comparable, V any] struct {
 }
 
 func (a *varExpiryAccessing[K, V]) ExpireAfterCreate(entry Entry[K, V]) time.Duration {
-	return a.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (a *varExpiryAccessing[K, V]) ExpireAfterUpdate(entry Entry[K, V], oldValue V) time.Duration {
-	return a.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (a *varExpiryAccessing[K, V]) ExpireAfterRead(entry Entry[K, V]) time.Duration {
-	return a.f(entry)
+	_ = "STUB: not implemented"
+
+	// ExpiryAccessing returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
+	// the cache once the duration has elapsed after the entry's creation, replacement of its value,
+	// or after it was last read.
+	return *new(time.Duration)
 }
 
-// ExpiryAccessing returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
-// the cache once the duration has elapsed after the entry's creation, replacement of its value,
-// or after it was last read.
 func ExpiryAccessing[K comparable, V any](duration time.Duration) ExpiryCalculator[K, V] {
-	return ExpiryAccessingFunc(func(entry Entry[K, V]) time.Duration {
-		return duration
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExpiryAccessingFunc returns an [ExpiryCalculator] that specifies that the entry should be automatically deleted from
 // the cache once the duration has elapsed after the entry's creation, replacement of its value,
 // or after it was last read.
 func ExpiryAccessingFunc[K comparable, V any](f func(entry Entry[K, V]) time.Duration) ExpiryCalculator[K, V] {
-	return &varExpiryAccessing[K, V]{
-		f: f,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

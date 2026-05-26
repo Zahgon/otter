@@ -39,10 +39,10 @@ type task[K comparable, V any] struct {
 
 // node returns the node contained in the task. If node was not specified, it returns nil.
 func (t *task[K, V]) node() node.Node[K, V] {
-	return t.n
+	_ = "STUB: not implemented"
+
+	// oldNode returns the old node contained in the task. If old node was not specified, it returns nil.
+	return nil
 }
 
-// oldNode returns the old node contained in the task. If old node was not specified, it returns nil.
-func (t *task[K, V]) oldNode() node.Node[K, V] {
-	return t.old
-}
+func (t *task[K, V]) oldNode() node.Node[K, V] { _ = "STUB: not implemented"; return nil }

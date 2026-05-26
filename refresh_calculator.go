@@ -43,37 +43,39 @@ type varRefreshCreating[K comparable, V any] struct {
 }
 
 func (c *varRefreshCreating[K, V]) RefreshAfterCreate(entry Entry[K, V]) time.Duration {
-	return c.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (c *varRefreshCreating[K, V]) RefreshAfterUpdate(entry Entry[K, V], oldValue V) time.Duration {
-	return entry.RefreshableAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (c *varRefreshCreating[K, V]) RefreshAfterReload(entry Entry[K, V], oldValue V) time.Duration {
-	return entry.RefreshableAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (c *varRefreshCreating[K, V]) RefreshAfterReloadFailure(entry Entry[K, V], err error) time.Duration {
-	return entry.RefreshableAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // RefreshCreating returns a [RefreshCalculator] that specifies that the entry should be automatically reloaded
 // once the duration has elapsed after the entry's creation.
 // The refresh time is not modified when the entry is updated or reloaded.
 func RefreshCreating[K comparable, V any](duration time.Duration) RefreshCalculator[K, V] {
-	return RefreshCreatingFunc(func(entry Entry[K, V]) time.Duration {
-		return duration
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RefreshCreatingFunc returns a [RefreshCalculator] that specifies that the entry should be automatically reloaded
 // once the duration has elapsed after the entry's creation.
 // The refresh time is not modified when the entry is updated or reloaded.
 func RefreshCreatingFunc[K comparable, V any](f func(entry Entry[K, V]) time.Duration) RefreshCalculator[K, V] {
-	return &varRefreshCreating[K, V]{
-		f: f,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type varRefreshWriting[K comparable, V any] struct {
@@ -81,35 +83,37 @@ type varRefreshWriting[K comparable, V any] struct {
 }
 
 func (w *varRefreshWriting[K, V]) RefreshAfterCreate(entry Entry[K, V]) time.Duration {
-	return w.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (w *varRefreshWriting[K, V]) RefreshAfterUpdate(entry Entry[K, V], oldValue V) time.Duration {
-	return w.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (w *varRefreshWriting[K, V]) RefreshAfterReload(entry Entry[K, V], oldValue V) time.Duration {
-	return w.f(entry)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 func (w *varRefreshWriting[K, V]) RefreshAfterReloadFailure(entry Entry[K, V], err error) time.Duration {
-	return entry.RefreshableAfter()
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // RefreshWriting returns a [RefreshCalculator] that specifies that the entry should be automatically reloaded
 // once the duration has elapsed after the entry's creation or the most recent replacement of its value.
 // The refresh time is not modified when the reload fails.
 func RefreshWriting[K comparable, V any](duration time.Duration) RefreshCalculator[K, V] {
-	return RefreshWritingFunc(func(entry Entry[K, V]) time.Duration {
-		return duration
-	})
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RefreshWritingFunc returns a [RefreshCalculator] that specifies that the entry should be automatically reloaded
 // once the duration has elapsed after the entry's creation or the most recent replacement of its value.
 // The refresh time is not modified when the reload fails.
 func RefreshWritingFunc[K comparable, V any](f func(entry Entry[K, V]) time.Duration) RefreshCalculator[K, V] {
-	return &varRefreshWriting[K, V]{
-		f: f,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

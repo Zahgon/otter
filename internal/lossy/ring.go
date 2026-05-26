@@ -69,55 +69,20 @@ type ring[K comparable, V any] struct {
 }
 
 func newRing[K comparable, V any](nodeManager *node.Manager[K, V], n node.Node[K, V]) *ring[K, V] {
-	r := &ring[K, V]{
-		nodeManager: nodeManager,
-	}
-	r.buffer[0] = n.AsPointer()
-	r.tail.Store(1)
-	return r
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (r *ring[K, V]) add(n node.Node[K, V]) Status {
-	head := r.head.Load()
-	tail := r.tail.Load()
-	size := tail - head
-	if size >= bufferSize {
-		return Full
-	}
+func (r *ring[K, V]) add(n node.Node[K, V]) Status { _ = "STUB: not implemented"; return *new(Status) }
 
-	if r.tail.CompareAndSwap(tail, tail+1) {
-		atomic.StorePointer(&r.buffer[tail&mask], n.AsPointer())
-		return Success
-	}
-	return Failed
-}
+func (r *ring[K, V]) drainTo(consumer func(n node.Node[K, V])) { _ = "STUB: not implemented"; return }
 
-func (r *ring[K, V]) drainTo(consumer func(n node.Node[K, V])) {
-	head := r.head.Load()
-	tail := r.tail.Load()
-	size := tail - head
-	if size == 0 {
-		return
-	}
-
-	nm := r.nodeManager
-	for head != tail {
-		index := head & mask
-		ptr := atomic.LoadPointer(&r.buffer[index])
-		if ptr == nil {
-			// not published.
-			break
-		}
-		atomic.StorePointer(&r.buffer[index], nil)
-		consumer(nm.FromPointer(ptr))
-		head++
-	}
-	r.head.Store(head)
-}
+// not published.
 
 func (r *ring[K, V]) len() int {
+	_ = "STUB: not implemented"
 	//nolint:gosec // there is no overflow
-	return int(r.tail.Load() - r.head.Load())
+	return 0
 }
 
 /*

@@ -1,8 +1,6 @@
 package policy
 
 import (
-	"container/heap"
-
 	"github.com/maypok86/otter/v2/benchmarks/simulator/internal/event"
 )
 
@@ -12,48 +10,15 @@ type Optimal struct {
 	access   []uint64
 }
 
-func NewOptimal(capacity int) *Optimal {
-	return &Optimal{
-		capacity: uint64(capacity),
-		hits:     make(map[uint64]uint64),
-		access:   make([]uint64, 0),
-	}
-}
+func NewOptimal(capacity int) *Optimal { _ = "STUB: not implemented"; return nil }
 
-func (o *Optimal) Record(e event.AccessEvent) {
-	o.hits[e.Key()]++
-	o.access = append(o.access, e.Key())
-}
+func (o *Optimal) Record(e event.AccessEvent) { _ = "STUB: not implemented"; return }
 
-func (o *Optimal) Ratio() float64 {
-	hits := uint64(0)
-	misses := uint64(0)
-	look := make(map[uint64]struct{}, o.capacity)
-	data := &optimalHeap{}
-	heap.Init(data)
-	for _, key := range o.access {
-		if _, has := look[key]; has {
-			hits++
-			continue
-		}
-		if uint64(data.Len()) >= o.capacity {
-			victim := heap.Pop(data)
-			delete(look, victim.(*optimalItem).key)
-		}
-		misses++
-		look[key] = struct{}{}
-		heap.Push(data, &optimalItem{key, o.hits[key]})
-	}
+func (o *Optimal) Ratio() float64 { _ = "STUB: not implemented"; return 0 }
 
-	return 100 * (float64(hits) / float64(hits+misses))
-}
+func (o *Optimal) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (o *Optimal) Name() string {
-	return "optimal"
-}
-
-func (o *Optimal) Close() {
-}
+func (o *Optimal) Close() { _ = "STUB: not implemented"; return }
 
 type optimalItem struct {
 	key  uint64
@@ -62,18 +27,10 @@ type optimalItem struct {
 
 type optimalHeap []*optimalItem
 
-func (h optimalHeap) Len() int           { return len(h) }
-func (h optimalHeap) Less(i, j int) bool { return h[i].hits < h[j].hits }
-func (h optimalHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h optimalHeap) Len() int           { _ = "STUB: not implemented"; return 0 }
+func (h optimalHeap) Less(i, j int) bool { _ = "STUB: not implemented"; return false }
+func (h optimalHeap) Swap(i, j int)      { _ = "STUB: not implemented"; return }
 
-func (h *optimalHeap) Push(x any) {
-	*h = append(*h, x.(*optimalItem))
-}
+func (h *optimalHeap) Push(x any) { _ = "STUB: not implemented"; return }
 
-func (h *optimalHeap) Pop() any {
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[0 : n-1]
-	return x
-}
+func (h *optimalHeap) Pop() any { _ = "STUB: not implemented"; return *new(any) }

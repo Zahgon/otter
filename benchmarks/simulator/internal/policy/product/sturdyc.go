@@ -1,9 +1,6 @@
 package product
 
 import (
-	"strconv"
-	"time"
-
 	"github.com/viccon/sturdyc"
 )
 
@@ -11,22 +8,12 @@ type Sturdyc struct {
 	client *sturdyc.Client[uint64]
 }
 
-func (c *Sturdyc) Init(capacity int) {
-	c.client = sturdyc.New[uint64](capacity, 10, time.Hour, 10)
-}
+func (c *Sturdyc) Init(capacity int) { _ = "STUB: not implemented"; return }
 
-func (c *Sturdyc) Name() string {
-	return "sturdyc"
-}
+func (c *Sturdyc) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Sturdyc) Get(key uint64) (uint64, bool) {
-	return c.client.Get(strconv.FormatUint(key, 10))
-}
+func (c *Sturdyc) Get(key uint64) (uint64, bool) { _ = "STUB: not implemented"; return 0, false }
 
-func (c *Sturdyc) Set(key uint64, value uint64) {
-	c.client.Set(strconv.FormatUint(key, 10), value)
-}
+func (c *Sturdyc) Set(key uint64, value uint64) { _ = "STUB: not implemented"; return }
 
-func (c *Sturdyc) Close() {
-	c.client = nil
-}
+func (c *Sturdyc) Close() { _ = "STUB: not implemented"; return }

@@ -24,157 +24,81 @@ type BE[K comparable, V any] struct {
 
 // NewBE creates a new BE.
 func NewBE[K comparable, V any](key K, value V, expiresAt, refreshableAt int64, weight uint32) Node[K, V] {
-	n := &BE[K, V]{
-		key:   key,
-		value: value,
-	}
-	n.expiresAt.Store(expiresAt)
-	n.state.Store(aliveState)
-
-	return n
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CastPointerToBE casts a pointer to BE.
 func CastPointerToBE[K comparable, V any](ptr unsafe.Pointer) Node[K, V] {
-	return (*BE[K, V])(ptr)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (n *BE[K, V]) Key() K {
-	return n.key
-}
+func (n *BE[K, V]) Key() K { _ = "STUB: not implemented"; return *new(K) }
 
-func (n *BE[K, V]) Value() V {
-	return n.value
-}
+func (n *BE[K, V]) Value() V { _ = "STUB: not implemented"; return *new(V) }
 
 func (n *BE[K, V]) AsPointer() unsafe.Pointer {
-	return unsafe.Pointer(n)
+	_ = "STUB: not implemented"
+	return *new(unsafe.Pointer)
 }
 
-func (n *BE[K, V]) Prev() Node[K, V] {
-	panic("not implemented")
-}
+func (n *BE[K, V]) Prev() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BE[K, V]) SetPrev(v Node[K, V]) {
-	panic("not implemented")
-}
+func (n *BE[K, V]) SetPrev(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) Next() Node[K, V] {
-	panic("not implemented")
-}
+func (n *BE[K, V]) Next() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BE[K, V]) SetNext(v Node[K, V]) {
-	panic("not implemented")
-}
+func (n *BE[K, V]) SetNext(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) PrevExp() Node[K, V] {
-	return n.prevExp
-}
+func (n *BE[K, V]) PrevExp() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BE[K, V]) SetPrevExp(v Node[K, V]) {
-	if v == nil {
-		n.prevExp = nil
-		return
-	}
-	n.prevExp = (*BE[K, V])(v.AsPointer())
-}
+func (n *BE[K, V]) SetPrevExp(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) NextExp() Node[K, V] {
-	return n.nextExp
-}
+func (n *BE[K, V]) NextExp() Node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *BE[K, V]) SetNextExp(v Node[K, V]) {
-	if v == nil {
-		n.nextExp = nil
-		return
-	}
-	n.nextExp = (*BE[K, V])(v.AsPointer())
-}
+func (n *BE[K, V]) SetNextExp(v Node[K, V]) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) HasExpired(now int64) bool {
-	return n.ExpiresAt() <= now
-}
+func (n *BE[K, V]) HasExpired(now int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) ExpiresAt() int64 {
-	return n.expiresAt.Load()
-}
+func (n *BE[K, V]) ExpiresAt() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BE[K, V]) CASExpiresAt(old, new int64) bool {
-	return n.expiresAt.CompareAndSwap(old, new)
-}
+func (n *BE[K, V]) CASExpiresAt(old, new int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) SetExpiresAt(new int64) {
-	n.expiresAt.Store(new)
-}
+func (n *BE[K, V]) SetExpiresAt(new int64) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) RefreshableAt() int64 {
-	panic("not implemented")
-}
+func (n *BE[K, V]) RefreshableAt() int64 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BE[K, V]) CASRefreshableAt(old, new int64) bool {
-	panic("not implemented")
-}
+func (n *BE[K, V]) CASRefreshableAt(old, new int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) SetRefreshableAt(new int64) {
-	panic("not implemented")
-}
+func (n *BE[K, V]) SetRefreshableAt(new int64) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) IsFresh(now int64) bool {
-	return true
-}
+func (n *BE[K, V]) IsFresh(now int64) bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) Weight() uint32 {
-	return 1
-}
+func (n *BE[K, V]) Weight() uint32 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BE[K, V]) IsAlive() bool {
-	return n.state.Load() == aliveState
-}
+func (n *BE[K, V]) IsAlive() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) IsRetired() bool {
-	return n.state.Load() == retiredState
-}
+func (n *BE[K, V]) IsRetired() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) Retire() {
-	n.state.Store(retiredState)
-}
+func (n *BE[K, V]) Retire() { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) IsDead() bool {
-	return n.state.Load() == deadState
-}
+func (n *BE[K, V]) IsDead() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) Die() {
-	n.state.Store(deadState)
-}
+func (n *BE[K, V]) Die() { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) GetQueueType() uint8 {
-	panic("not implemented")
-}
+func (n *BE[K, V]) GetQueueType() uint8 { _ = "STUB: not implemented"; return 0 }
 
-func (n *BE[K, V]) SetQueueType(queueType uint8) {
-	panic("not implemented")
-}
+func (n *BE[K, V]) SetQueueType(queueType uint8) { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) InWindow() bool {
-	return n.GetQueueType() == InWindowQueue
-}
+func (n *BE[K, V]) InWindow() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) MakeWindow() {
-	n.SetQueueType(InWindowQueue)
-}
+func (n *BE[K, V]) MakeWindow() { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) InMainProbation() bool {
-	return n.GetQueueType() == InMainProbationQueue
-}
+func (n *BE[K, V]) InMainProbation() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) MakeMainProbation() {
-	n.SetQueueType(InMainProbationQueue)
-}
+func (n *BE[K, V]) MakeMainProbation() { _ = "STUB: not implemented"; return }
 
-func (n *BE[K, V]) InMainProtected() bool {
-	return n.GetQueueType() == InMainProtectedQueue
-}
+func (n *BE[K, V]) InMainProtected() bool { _ = "STUB: not implemented"; return false }
 
-func (n *BE[K, V]) MakeMainProtected() {
-	n.SetQueueType(InMainProtectedQueue)
-}
+func (n *BE[K, V]) MakeMainProtected() { _ = "STUB: not implemented"; return }

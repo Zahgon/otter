@@ -52,9 +52,7 @@ type Entry[K comparable, V any] struct {
 //
 // If the cache was not configured with an expiration policy then this value is roughly [math.MaxInt64]
 // nanoseconds away from the SnapshotAt.
-func (e Entry[K, V]) ExpiresAt() time.Time {
-	return time.Unix(0, e.ExpiresAtNano)
-}
+func (e Entry[K, V]) ExpiresAt() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // ExpiresAfter returns the fixed duration used to determine if an entry should be automatically removed due
 // to elapsing this time bound. An entry is considered fresh if its age is less than this
@@ -62,21 +60,18 @@ func (e Entry[K, V]) ExpiresAt() time.Time {
 //
 // If the cache was not configured with an expiration policy then this value is always [math.MaxInt64].
 func (e Entry[K, V]) ExpiresAfter() time.Duration {
-	return time.Duration(e.ExpiresAtNano - e.SnapshotAtNano)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // HasExpired returns true if the entry has expired.
-func (e Entry[K, V]) HasExpired() bool {
-	return e.ExpiresAtNano < e.SnapshotAtNano
-}
+func (e Entry[K, V]) HasExpired() bool { _ = "STUB: not implemented"; return false }
 
 // RefreshableAt is the time after which the entry will be reloaded.
 //
 // If the cache was not configured with a refresh policy then this value is roughly [math.MaxInt64]
 // nanoseconds away from the SnapshotAt.
-func (e Entry[K, V]) RefreshableAt() time.Time {
-	return time.Unix(0, e.RefreshableAtNano)
-}
+func (e Entry[K, V]) RefreshableAt() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // RefreshableAfter returns the fixed duration used to determine if an entry should be eligible for reloading due
 // to elapsing this time bound. An entry is considered fresh if its age is less than this
@@ -84,12 +79,11 @@ func (e Entry[K, V]) RefreshableAt() time.Time {
 //
 // If the cache was not configured with a refresh policy then this value is always [math.MaxInt64].
 func (e Entry[K, V]) RefreshableAfter() time.Duration {
-	return time.Duration(e.RefreshableAtNano - e.SnapshotAtNano)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // SnapshotAt is the time when this snapshot of the entry was taken.
 //
 // If the cache was not configured with a time-based policy then this value is always 1970-01-01 00:00:00 UTC.
-func (e Entry[K, V]) SnapshotAt() time.Time {
-	return time.Unix(0, e.SnapshotAtNano)
-}
+func (e Entry[K, V]) SnapshotAt() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }

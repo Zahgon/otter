@@ -15,10 +15,7 @@
 package stats
 
 import (
-	"math"
 	"time"
-
-	"github.com/maypok86/otter/v2/internal/xmath"
 )
 
 // Stats are statistics about the performance of an otter.Cache.
@@ -46,108 +43,48 @@ type Stats struct {
 //
 // NOTE: the values of the metrics are undefined in case of overflow. If you require specific handling, we recommend
 // implementing your own [Recorder].
-func (s Stats) Requests() uint64 {
-	return saturatedAdd(s.Hits, s.Misses)
-}
+func (s Stats) Requests() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // HitRatio returns the ratio of cache requests which were hits.
 //
 // NOTE: hitRatio + missRatio =~ 1.0.
-func (s Stats) HitRatio() float64 {
-	requests := s.Requests()
-	if requests == 0 {
-		return 1.0
-	}
-	return float64(s.Hits) / float64(requests)
-}
+func (s Stats) HitRatio() float64 { _ = "STUB: not implemented"; return 0 }
 
 // MissRatio returns the ratio of cache requests which were misses.
 //
 // NOTE: hitRatio + missRatio =~ 1.0.
-func (s Stats) MissRatio() float64 {
-	requests := s.Requests()
-	if requests == 0 {
-		return 0.0
-	}
-	return float64(s.Misses) / float64(requests)
-}
+func (s Stats) MissRatio() float64 { _ = "STUB: not implemented"; return 0 }
 
 // Loads returns the total number of times that otter.Cache lookup methods attempted to load new values.
 //
 // NOTE: the values of the metrics are undefined in case of overflow. If you require specific handling, we recommend
 // implementing your own [Recorder].
-func (s Stats) Loads() uint64 {
-	return saturatedAdd(s.LoadSuccesses, s.LoadFailures)
-}
+func (s Stats) Loads() uint64 { _ = "STUB: not implemented"; return 0 }
 
 // LoadFailureRatio returns the ratio of cache loading attempts which returned errors.
-func (s Stats) LoadFailureRatio() float64 {
-	loads := s.Loads()
-	if loads == 0 {
-		return 0.0
-	}
-	return float64(s.LoadFailures) / float64(loads)
-}
+func (s Stats) LoadFailureRatio() float64 { _ = "STUB: not implemented"; return 0 }
 
 // AverageLoadPenalty returns the average time spent loading new values.
 func (s Stats) AverageLoadPenalty() time.Duration {
-	loads := s.Loads()
-	if loads == 0 {
-		return 0
-	}
-	if loads > uint64(math.MaxInt64) {
-		return s.TotalLoadTime / time.Duration(math.MaxInt64)
-	}
-	return s.TotalLoadTime / time.Duration(loads)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // Minus returns a new [Stats] representing the difference between this [Stats] and other.
 // Negative values, which aren't supported by [Stats] will be rounded up to zero.
-func (s Stats) Minus(other Stats) Stats {
-	return Stats{
-		Hits:           subtract(s.Hits, other.Hits),
-		Misses:         subtract(s.Misses, other.Misses),
-		Evictions:      subtract(s.Evictions, other.Evictions),
-		EvictionWeight: subtract(s.EvictionWeight, other.EvictionWeight),
-		LoadSuccesses:  subtract(s.LoadSuccesses, other.LoadSuccesses),
-		LoadFailures:   subtract(s.LoadFailures, other.LoadFailures),
-		TotalLoadTime:  subtract(s.TotalLoadTime, other.TotalLoadTime),
-	}
-}
+func (s Stats) Minus(other Stats) Stats { _ = "STUB: not implemented"; return *new(Stats) }
 
 // Plus returns a new [Stats] representing the sum of this [Stats] and other.
 //
 // NOTE: the values of the metrics are undefined in case of overflow (though it is
 // guaranteed not to throw an exception). If you require specific handling, we recommend
 // implementing your own stats' recorder.
-func (s Stats) Plus(other Stats) Stats {
-	totalLoadTime := xmath.SaturatedAdd(int64(s.TotalLoadTime), int64(other.TotalLoadTime))
-	return Stats{
-		Hits:           saturatedAdd(s.Hits, other.Hits),
-		Misses:         saturatedAdd(s.Misses, other.Misses),
-		Evictions:      saturatedAdd(s.Evictions, other.Evictions),
-		EvictionWeight: saturatedAdd(s.EvictionWeight, other.EvictionWeight),
-		LoadSuccesses:  saturatedAdd(s.LoadSuccesses, other.LoadSuccesses),
-		LoadFailures:   saturatedAdd(s.LoadFailures, other.LoadFailures),
-		TotalLoadTime:  time.Duration(totalLoadTime),
-	}
-}
+func (s Stats) Plus(other Stats) Stats { _ = "STUB: not implemented"; return *new(Stats) }
 
 type counterType interface {
 	~uint64 | ~int64
 }
 
-func subtract[T counterType](a, b T) T {
-	if a < b {
-		return 0
-	}
-	return a - b
-}
+func subtract[T counterType](a, b T) T { _ = "STUB: not implemented"; return *new(T) }
 
-func saturatedAdd(a, b uint64) uint64 {
-	s := a + b
-	if s < a || s < b {
-		return math.MaxUint64
-	}
-	return s
-}
+func saturatedAdd(a, b uint64) uint64 { _ = "STUB: not implemented"; return 0 }
